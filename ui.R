@@ -1,33 +1,27 @@
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
 
-# Define UI for application that draws a histogram
 shinyUI(fluidPage(
-
-    # Application title
-    titlePanel("Old Faithful Geyser Data"),
-
-    # Sidebar with a slider input for number of bins
+    
+    titlePanel("Age of Orange Trees Prediction"),
+    
     sidebarLayout(
         sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
+            radioButtons(inputId = "Tree",
+                        label = "An ordered factor indicating the tree.",
+                        choices = c("A" = 3, "B" = 1, "C" = 5, "D" = 2, "E" = 4),
+                        inline = TRUE),
+            
+            sliderInput(inputId = "cir",
+                        label = "Trunk Circumferences (mm):",
+                        value = 150,
+                        min = min(Orange$circumference),
+                        max = max(Orange$circumference)+1,
+                        step = 10),
         ),
 
-        # Show a plot of the generated distribution
         mainPanel(
-            plotOutput("distPlot")
+            htmlOutput("pred"),
+            plotOutput('plot', width = "90%")
         )
     )
 ))
